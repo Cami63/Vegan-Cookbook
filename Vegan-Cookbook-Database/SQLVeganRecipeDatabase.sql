@@ -1,0 +1,4 @@
+CREATE TABLE recipes (id INT NOT NULL, recipe_name varchar(255), health_rating INT NOT NULL, nationality INT NOT NULL, prep_time_minutes INT NOT NULL, PRIMARY KEY (recipe_id));
+CREATE TABLE ingredients (id INT NOT NULL, ingredient_name varchar(225) NOT NULL, recipe_id INT NOT NULL, PRIMARY KEY (id), FOREIGN KEY (recipe_id) REFERENCES recipes(id));
+CREATE TABLE meal_types (id INT NOT NULL, meal_name varchar(255) NOT NULL, recipe_id INT NOT NULL, PRIMARY KEY (id), FOREIGN KEY (recipe_id) REFERENCES recipes(id));
+CREATE TABLE recipe_steps (id INT NOT NULL, step_description varchar(255), recipe_id INT NOT NULL, PRIMARY KEY (id), FOREIGN KEY (recipe_id) REFERENCES recipes(id));
