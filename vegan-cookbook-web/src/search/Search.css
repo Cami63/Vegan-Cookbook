@@ -1,0 +1,178 @@
+.search-methods {
+    display:inline-flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    align-content: space-around;
+}
+.include-ingredients {
+    display: grid;
+    grid-template-areas: "inc-ing l11 l11"
+                         ".       l12 l12"
+                         ".       l13 l13"
+                         ".       l14 l14"
+                         ".       l15 l15";
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    height: 400px;
+    width: 300px;
+}
+#lbl-inc-ing {
+    grid-area:inc-ing;
+}
+#l11 {
+    grid-area:l11;
+}
+#l12 {
+    grid-area:l12;
+}
+#l13 {
+    grid-area:l13;
+}
+#l14 {
+    grid-area:l14;
+}
+#l15 {
+    grid-area:l15;
+}
+.disclude-ingredients {
+    display: grid;
+    grid-template-areas: "dis-ing l21 l21"
+                         ".       l22 l22"
+                         ".       l23 l23"
+                         ".       l24 l24"
+                         ".       l25 l25";
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    height: 400px;
+    width: 300px;
+}
+#lbl-dis-ing {
+    grid-area:dis-ing;
+}
+#l21 {
+    grid-area:l21;
+}
+#l22 {
+    grid-area:l22;
+}
+#l23 {
+    grid-area:l23;
+}
+#l24 {
+    grid-area:l24;
+}
+#l25 {
+    grid-area:l25;
+}
+.meal-time {
+    display: grid;
+    grid-template-areas: "meal breakfast breakfast"
+                         ".    lunch     lunch"
+                         ".    dinner    dinner"
+                         ".    snack     snack"
+                         ".    dessert   dessert";
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    height: 400px;
+    width: 400px;
+}
+#lbl-meal {
+    grid-area:meal;
+}
+#breakfast {
+    grid-area:breakfast;
+}
+#lunch {
+    grid-area: lunch;
+}
+#dinner {
+    grid-area: dinner;
+}
+#snack {
+    grid-area: snack;
+}
+#dessert {
+    grid-area: dessert;
+}
+.health-rating {
+    display: grid;
+    grid-template-areas: "health one   one"
+                         ".      two   two"
+                         ".      three three"
+                         ".      four  four"
+                         ".      five  five";
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    height: 400px;
+    width: 300px;
+}
+#lbl-health {
+    grid-area: health;
+}
+#one {
+    grid-area: one;
+}
+#two {
+    grid-area: two;
+}
+#three {
+    grid-area: three;
+}
+#four {
+    grid-area: four;
+}
+#five {
+    grid-area: five;
+}
+.prep-time {
+    display: grid;
+    grid-template-areas:"min minimum"
+                        "max maximum";
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    height: 400px;
+    width: 300px;
+}
+#lbl-min {
+    grid-area: min;
+}
+#lbl-max {
+    grid-area: max;
+}
+#minimum {
+    grid-area: minimum;
+}
+#maximum {
+    grid-area: maximum;
+}
+.keywords {
+    display: grid;
+    grid-template-areas: "keyw l31 l31"
+                         ".    l32 l32"
+                         ".    l33 l33"
+                         ".    l34 l34"
+                         ".    l35 l35";
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    height: 400px;
+    width: 300px;
+}
+#keyw {
+    grid-area: keyw;
+}
+#l31 {
+    grid-area: l31;
+}
+#l32 {
+    grid-area: l32;
+}
+#l33 {
+    grid-area: l33;
+}
+#l34 {
+    grid-area: l34;
+}
+#l35 {
+    grid-area: l35;
+}
