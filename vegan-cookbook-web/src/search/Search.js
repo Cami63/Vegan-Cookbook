@@ -2,14 +2,27 @@ import './Search.css';
 import Api from '../api/Api';
 
 import { useState, useEffect } from 'react';
+/*
+import React from 'react';
+import ReactDOM from 'react-dom';
+class SearchResults extends React.Component {
+    render () {
+        return ()
+    }
 
-const Search = (props) => {
+
+}
+ReactDOM.render(ShowResults, document.getElementById('Search'))
+
+ */
+
+function Search(props) {
     const [ingredients, setIngredients] = useState([]);
     const [includedIngredients, setIncludedIngredients] = useState([]);
     const [excludedIngredients, setExcludedIngredients] = useState([]);
 
     useEffect(() => {
-        Api.getIngredients().then(setIngredients);
+        Api.getIngredients().then(resp => setIngredients(resp.ingredients));
     }, []);
 
     const includedIngredientSelected = (inputIndex, inputValue) => {
@@ -34,8 +47,8 @@ const Search = (props) => {
                         <select onChange={(event) => includedIngredientSelected(0, event?.target?.value)}>
                             {
                                 ingredients.map(
-                                    ingredient => 
-                                        <option value={ingredient.id}>{ingredient.name}</option>)
+                                    (ingredient, i) => 
+                                        <option key={i} value={i}>{ingredient}</option>)
                             }
                         </select>
                     </li>
@@ -111,7 +124,7 @@ const Search = (props) => {
                 <input type="number" name="minutes" id="maximum" step="1"></input>
             </div>
         </div>
-        <div class="search-btn">
+        <div onClick={SearchResults} class="search-btn">
             <h3>SEARCH</h3>
         </div>
     </main>
