@@ -1,3 +1,4 @@
+
 CREATE DATABASE vegan_cookbook;
 
 USE vegan_cookbook;
