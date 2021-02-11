@@ -5,13 +5,13 @@ app = Flask("vegan-cookbook-api")
 cors = CORS(app)
 app.config["CORS_HEADERS"] = 'Content-Type'
 
-db = mysql.connector.connect(host="localhost", user="root", database="vegan_cookbook")
+db = mysql.connector.connect(host="localhost", user="root", database="veg", password="Camiscode6363!")
 
 @app.route('/meal_types')
 @cross_origin()
 def get_meal_types():
     cursor = db.cursor()
-    cursor.execute("SELECT * FROM meal_types")
+    cursor.execute("SELECT id, meal_name FROM meal_types")
     return {
         "meal_types":cursor.fetchall()
     }
@@ -19,39 +19,19 @@ def get_meal_types():
 @app.route('/recipes')
 @cross_origin()
 def get_recipes():
+    cursor = db.cursor()
+    cursor.execute("SELECT id, recipe_name, health_rating, nationality_id, prep_time_minutes FROM recipes")
     return {
-        "recipes": [
-            {
-                "id": 3,
-                "ingredients": [
-                    "oil",
-                    "onion",
-                    "carrot"
-                ],
-                "name":"Sauteed Carrots and Onions",
-                "health_rating": 4,
-                "nationality": None,
-                "prep_time_minutes": 20,
-                "meal_type": [
-                    "dinner",
-                    "lunch"
-                ],
-                "steps": [
-                    "Cut up veggies.",
-                    "Heat the empty pan.",
-                    "Add oil and heat until it flows like water."
-                ]
-            }
-        ]
+        "recipes":cursor.fetchall()
     }
 
 @app.route('/ingredients')
 @cross_origin()
 def get_ingredients():
+    cursor = db.cursor()
+    cursor.execute("SELECT id, ingredient_name FROM ingredients")
     return {
-        "ingredients": [
-            "oil",
-            "onion",
-            "carrot"
-        ]
+        "ingredients":cursor.fetchall()
     }
+
+@app.route()

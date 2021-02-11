@@ -1,5 +1,5 @@
 import './Search.css';
-import Api from '../api/Api';
+import ApiConnector from '../api/Api';
 
 import { useState, useEffect } from 'react';
 /*
@@ -22,7 +22,7 @@ function Search(props) {
     const [excludedIngredients, setExcludedIngredients] = useState([]);
 
     useEffect(() => {
-        Api.getIngredients().then(resp => setIngredients(resp.ingredients));
+        ApiConnector.getIngredients().then(resp => setIngredients(resp.ingredients));
     }, []);
 
     const includedIngredientSelected = (inputIndex, inputValue) => {
@@ -47,8 +47,8 @@ function Search(props) {
                         <select onChange={(event) => includedIngredientSelected(0, event?.target?.value)}>
                             {
                                 ingredients.map(
-                                    (ingredient, i) => 
-                                        <option key={i} value={i}>{ingredient}</option>)
+                                    (ingredient) => 
+                                        <option key={ingredient[0]} value={ingredient[0]}>{ingredient[1]}</option>)
                             }
                         </select>
                     </li>
@@ -124,7 +124,7 @@ function Search(props) {
                 <input type="number" name="minutes" id="maximum" step="1"></input>
             </div>
         </div>
-        <div onClick={SearchResults} class="search-btn">
+        <div class="search-btn">
             <h3>SEARCH</h3>
         </div>
     </main>
