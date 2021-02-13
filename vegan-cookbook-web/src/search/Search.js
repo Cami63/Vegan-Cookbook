@@ -2,19 +2,6 @@ import './Search.css';
 import ApiConnector from '../api/Api';
 
 import { useState, useEffect } from 'react';
-/*
-import React from 'react';
-import ReactDOM from 'react-dom';
-class SearchResults extends React.Component {
-    render () {
-        return ()
-    }
-
-
-}
-ReactDOM.render(ShowResults, document.getElementById('Search'))
-
- */
 
 function Search(props) {
     const [ingredients, setIngredients] = useState([]);
@@ -124,7 +111,7 @@ function Search(props) {
                 <input type="number" name="minutes" id="maximum" step="1"></input>
             </div>
         </div>
-        <div class="search-btn">
+        <div onClick={search} class="search-btn">
             <h3>SEARCH</h3>
         </div>
     </main>

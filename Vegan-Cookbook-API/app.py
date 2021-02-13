@@ -34,4 +34,68 @@ def get_ingredients():
         "ingredients":cursor.fetchall()
     }
 
-@app.route()
+@app.route('/search')
+@cross_origin()
+def search(keywords1
+,keywords2
+,keywords3
+,keywords4
+,keywords5
+,prep_time_min
+,prep_time_max
+,includeing1
+,includeing2
+,includeing3
+,includeing4
+,includeing5
+,discludeing1
+,discludeing2
+,discludeing3
+,discludeing4
+,discludeing5
+,mealtime
+,healthrat):
+    cursor = db.cursor()
+    cursor.execute(f"""
+        CALL veg.search(
+        '{keywords1}',
+        '{keywords2}',
+        '{keywords3}',
+        '{keywords4}',
+        '{keywords5}',
+        {prep_time_min},
+        {prep_time_max},
+        '{includeing1}',
+        '{includeing2}',
+        '{includeing3}',
+        '{includeing4}'
+        ,'{includeing5}'
+        ,'{discludeing1}'
+        ,'{discludeing2}'
+        ,'{discludeing3}'
+        ,'{discludeing4}'
+        ,'{discludeing5}'
+        ,{mealtime}
+        ,{healthrat})""")
+    return {
+        "results": cursor.fetchall()
+    }
+
+
+
+@app.route('/recipe', methods = ['POST'])
+@cross_origin()
+def addrecipe (recipename
+,preptime
+,nationalit
+,healthrate):
+    cursor = db.cursor()
+    cursor.execute(f"""
+        CALL veg.addrecipe(
+        '{recipename}'
+        ,{preptime}
+        ,{nationalit}
+        ,{healthrate})""")
+    return {
+        "recipe": cursor.fetchall()
+    }
