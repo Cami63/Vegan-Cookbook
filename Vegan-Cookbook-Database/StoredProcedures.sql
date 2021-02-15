@@ -1,36 +1,8 @@
 DELIMITER $$
-
-CREATE PROCEDURE veg.getingredientid (
-    ingrename varchar(255)
-)
+CREATE PROCEDURE veg.getingredients ()
 BEGIN
-    SELECT ing.id
+    SELECT ing.ingredient_name
     FROM ingredients AS ing
-    WHERE ing.ingredient_name = ingrename
-END$$
-CREATE PROCEDURE veg.getmealid (
-    mealname varchar(12)
-)
-BEGIN
-    SELECT meal.id
-    FROM meal_types AS meal
-    WHERE meal.meal_name = mealname
-END$$
-CREATE PROCEDURE veg.getrecipeid (
-    recipenam varchar(255)
-)
-BEGIN
-    SELECT rec.id
-    FROM recipes AS rec
-    WHERE rec.recipe_name = recipename
-END$$
-CREATE PROCEDURE veg.getnationalityid (
-    nationalitname varchar(255)
-)
-BEGIN
-    SELECT nat.id
-    FROM nationality AS nat
-    WHERE nat.nationality = nationalitname
 END$$
 CREATE PROCEDURE veg.addrecipe (
     recipename varchar(255)
@@ -43,7 +15,7 @@ BEGIN
         VALUES (recipename, healthrate, nationalit, preptime);
     /*define things as unique so this will fail if such a value already exists*/
     -- do this in a transaction so the last insert id is correct
-    SELECT id, recipe_name, health_rating, nationality_id, prep_time_minutes FROM veg.recipes WHERE id = LAST_INSERT_ID()
+    SELECT LAST_INSERT_ID();
 END$$
 CREATE PROCEDURE veg.addingredient (
     ingre varchar(255)
@@ -51,32 +23,33 @@ CREATE PROCEDURE veg.addingredient (
 BEGIN
     INSERT INTO veg.ingredients (ingredient_name)
     /*define things as unique so this will fail if such a value already exists*/
-        VALUES (ingre)
+        VALUES (ingre);
+    SELECT LAST_INSERT_ID();
 END$$
-CREATE PROCEDURE veg.addrecipe_steps (
-    step varchar(1000)
-    num INT
+CREATE PROCEDURE veg.addrecipe_step (
+    step varchar(1000),
+    num INT,
     recipeident BIGINT
 )
 BEGIN
     INSERT INTO veg.recipe_steps (step_number, step_description, recipe_id)
-        VALUES (num, step, ident)
+        VALUES (num, step, recipeident);
 END$$
 CREATE PROCEDURE veg.addmeal_recipes (
-    mealident
-    recipeident
+    mealident INT,
+    recipeident BIGINT
 )
 BEGIN
     INSERT INTO veg.meal_recipes (meal_id, recipe_id)
-        VALUES (mealident, recipeident)
+        VALUES (mealident, recipeident);
 END$$
 CREATE PROCEDURE veg.addingredients_recipes (
-    recipeident BIGINT
+    recipeident BIGINT,
     ingreident BIGINT
 )
 BEGIN
     INSERT INTO ingredients_recipes (recipe_id, ingredient_id)
-        VALUES (recipeident, ingreident)
+        VALUES (recipeident, ingreident);
 END$$
 CREATE PROCEDURE veg.viewrecipe (
     recipeid BIGINT
@@ -85,17 +58,17 @@ BEGIN
     SELECT rec.id, rec.recipe_name, nat.nationality, rec.health_rating, rec.prep_time_minutes, ing.ingredient_name, meal.meal_name, rec_step.step_number, rec_step.step_description
     FROM recipes AS rec
         LEFT JOIN nationality AS nat
-            ON nat.nationality_id = recipeid
-        RIGHT JOIN recipes_ingredients AS rec_ing
-            ON rec.id = recipeid
+            ON nat.id = rec.nationality_id
+        RIGHT JOIN ingredients_recipes AS rec_ing
+            ON recipeid = rec_ing.recipe_id
         LEFT JOIN ingredients AS ing
-            ON ing.ingredient_id = rec_ing.ingredient_id
+            ON ing.id = rec_ing.ingredient_id
         LEFT JOIN meal_recipes AS meal_rec
             ON meal_rec.recipe_id = recipeid
         LEFT JOIN meal_types AS meal
             ON meal.id = meal_rec.meal_id
         LEFT JOIN recipe_steps as rec_step
-            ON rec_step.recipe_id = recipeid
+            ON rec_step.recipe_id = recipeid;
 END$$
 
 CREATE PROCEDURE veg.search (

@@ -1,5 +1,5 @@
 import mysql.connector
-from flask import Flask
+from flask import Flask, request
 from flask_cors import CORS, cross_origin
 app = Flask("vegan-cookbook-api")
 cors = CORS(app)
@@ -15,7 +15,7 @@ def get_meal_types():
     return {
         "meal_types":cursor.fetchall()
     }
-
+"""
 @app.route('/recipes')
 @cross_origin()
 def get_recipes():
@@ -33,50 +33,32 @@ def get_ingredients():
     return {
         "ingredients":cursor.fetchall()
     }
-
-@app.route('/search')
+"""
+@app.route('/search', methods = ['POST'])
 @cross_origin()
-def search(keywords1
-,keywords2
-,keywords3
-,keywords4
-,keywords5
-,prep_time_min
-,prep_time_max
-,includeing1
-,includeing2
-,includeing3
-,includeing4
-,includeing5
-,discludeing1
-,discludeing2
-,discludeing3
-,discludeing4
-,discludeing5
-,mealtime
-,healthrat):
+def search():
     cursor = db.cursor()
     cursor.execute(f"""
         CALL veg.search(
-        '{keywords1}',
-        '{keywords2}',
-        '{keywords3}',
-        '{keywords4}',
-        '{keywords5}',
-        {prep_time_min},
-        {prep_time_max},
-        '{includeing1}',
-        '{includeing2}',
-        '{includeing3}',
-        '{includeing4}'
-        ,'{includeing5}'
-        ,'{discludeing1}'
-        ,'{discludeing2}'
-        ,'{discludeing3}'
-        ,'{discludeing4}'
-        ,'{discludeing5}'
-        ,{mealtime}
-        ,{healthrat})""")
+        '{data["keywords1"]}',
+        '{data["keywords2"]}',
+        '{data["keywords3"]}',
+        '{data["keywords4"]}',
+        '{data["keywords5"]}',
+        {data["prep_time_min"]},
+        {data["prep_time_max"]},
+        '{data["includeing1"]}',
+        '{data["includeing2"]}',
+        '{data["includeing3"]}',
+        '{data["includeing4"]}'
+        ,'{data["includeing5"]}'
+        ,'{data["discludeing1"]}'
+        ,'{data["discludeing2"]}'
+        ,'{data["discludeing3"]}'
+        ,'{data["discludeing4"]}'
+        ,'{data["discludeing5"]}'
+        ,{data["mealtime"]}
+        ,{data["healthrat"]})""")
     return {
         "results": cursor.fetchall()
     }
@@ -85,17 +67,64 @@ def search(keywords1
 
 @app.route('/recipe', methods = ['POST'])
 @cross_origin()
-def addrecipe (recipename
-,preptime
-,nationalit
-,healthrate):
+def addrecipe ():
+    data = request.json 
+
     cursor = db.cursor()
+    
     cursor.execute(f"""
         CALL veg.addrecipe(
-        '{recipename}'
-        ,{preptime}
-        ,{nationalit}
-        ,{healthrate})""")
+        '{data["recipename"]}'
+        ,{data["preptime"]}
+        ,{data["nationalit"]}
+        ,{data["healthrate"]})""")
+    recipeId = cursor.fetchall()[0][0]
+    
+    cursor.execute(f"""
+        CALL veg.addingredient(
+            {data["ingredient"]}
+        )""")
+    ingredientId = cursor.fetchall()[0][0]
+
+    cusor.execute(f"""
+        CALL veg.addingredients_recipes(
+            {recipeId}
+            ,{ingredientId}
+        )""")
+    
+    cursor.execute(f"""
+        CALL veg.addrecipe_step(
+            '{data["step"]}'
+            ,{data["num"]}
+            ,{recipeId}
+        )""")
+
+    cursor.execute(f"""
+        CALL veg.addmeal_recipes(
+            {data["mealId"]}
+            ,{recipeId}
+        )""")
+    return viewrecipe(recipeId);
+
+
+@app.route('/recipe', methods = ['GET'])
+@cross_origin()
+def viewrecipe (recipeid):
+    cursor = db.cursor()
+    cursor.execute(f"""
+        CALL veg.viewrecipe(
+            {recipeid}
+        )""")
     return {
-        "recipe": cursor.fetchall()
+        "recipe":cursor.fetchall()
+    }
+
+@app.route('/ingredients')
+@cross_origin()
+def getingredients ():
+    cursor = db.cursor()
+    cursor.execute(f"""
+        CALL veg.getingredients()""")
+    return {
+        "ingredients":cursor.fetchall()
     }

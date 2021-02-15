@@ -1,8 +1,14 @@
 import logo from './logo.svg';
 import './App.css';
-import Search from './search/Search';
+import SearchPage from './search/SearchPage';
+import { useEffect, useState } from 'react';
+import ApiConnector from './api/ApiConnector';
 
 const App = () => {
+  const [mealTypes, setMealTypes] = useState([]);
+  useEffect(() => {
+    ApiConnector.getMealTypes().then((data) => {setMealTypes(data.meal_types)})
+  }, []);
   return (
     <>
       <div className="app">
@@ -18,7 +24,7 @@ const App = () => {
           </h1>
         </header>
       </div>
-      <Search />
+      <SearchPage mealTypes={mealTypes} />
     </>
   );
 }
