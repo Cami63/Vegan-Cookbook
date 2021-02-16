@@ -7,7 +7,7 @@
             "type": "python",
             "request": "launch",
             "stopOnEntry": false,
-            "pythonPath": "${config:python.pythonPath}",
+            "python": "${command:python.interpreterPath}",
             "program": "${workspaceRoot}/Vegan-Cookbook-API/app.py",
             "env": {
                 "FLASK_APP": "${workspaceRoot}/Vegan-Cookbook-API/app.py"
