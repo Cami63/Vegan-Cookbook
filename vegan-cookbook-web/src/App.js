@@ -24,7 +24,9 @@ const App = () => {
           </h1>
         </header>
       </div>
-      <SearchPage mealTypes={mealTypes} />
+      {
+        !!mealTypes?.length && <SearchPage mealTypes={mealTypes} />
+      }
     </>
   );
 }

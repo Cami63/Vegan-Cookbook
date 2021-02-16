@@ -1,8 +1,8 @@
 DELIMITER $$
 CREATE PROCEDURE veg.getingredients ()
 BEGIN
-    SELECT ing.ingredient_name
-    FROM ingredients AS ing
+    SELECT ing.id, ing.ingredient_name
+    FROM ingredients AS ing;
 END$$
 CREATE PROCEDURE veg.addrecipe (
     recipename varchar(255)
