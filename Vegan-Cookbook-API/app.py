@@ -179,7 +179,7 @@ def getingredients ():
     }
 
 def getnewcursor ():
-    db = mysql.connector.connect(host="localhost", user="root", database="veg", password="Camiscode6363!", pool_name="vegPool", pool_size=4)
+    db = mysql.connector.connect(host="localhost", user="root", database="veg", password="Camiscode6363!", pool_name="vegPool", pool_size=4, auth_plugin="mysql_native_password")
     return db.cursor(), db
 
 if __name__ == "__main__":

@@ -2,9 +2,9 @@ export default function ViewRecipe(props) {
     
     return (
         <div>
-            <h4>Prep time: {props.viewRecipeMealTimes[0][4]}</h4>
-            <h4>Nationality: {props.viewRecipeMealTimes[0][2]}</h4>
-            <h4>Health Rating: {props.viewRecipeMealTimes[0][3]}</h4>
+            <h4 id="search-result-prep-time">Prep time: {props.viewRecipeMealTimes[0][4]}</h4>
+            <h4 id="search-result-nationality">Nationality: {props.viewRecipeMealTimes[0][2]}</h4>
+            <h4 id="search-result-health-rating">Health Rating: {props.viewRecipeMealTimes[0][3]}</h4>
             <h4>Meal Times: </h4>
             {props.viewRecipeMealTimes.map((result) =>
                 <h4>{result[5]}</h4>)

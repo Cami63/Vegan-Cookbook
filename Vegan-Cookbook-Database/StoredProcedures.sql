@@ -95,21 +95,20 @@ CREATE PROCEDURE veg.search (
     ,keywords5 varchar (255)
     ,prep_time_min INT
     ,prep_time_max INT
-    ,includeing1 varchar(255)
-    ,includeing2 varchar(255)
-    ,includeing3 varchar(255)
-    ,includeing4 varchar(255)
-    ,includeing5 varchar(255)
-    ,discludeing1 varchar (255)
-    ,discludeing2 varchar (255)
-    ,discludeing3 varchar (255)
-    ,discludeing4 varchar (255)
-    ,discludeing5 varchar (255)
+    ,includeing1 INT
+    ,includeing2 INT
+    ,includeing3 INT
+    ,includeing4 INT
+    ,includeing5 INT
+    ,discludeing1 INT
+    ,discludeing2 INT
+    ,discludeing3 INT
+    ,discludeing4 INT
+    ,discludeing5 INT
     ,mealtime INT
     ,healthrat INT
 )
 BEGIN
-/*Need to create SELECT statements for all of the possibilites of what the user may have filled out/left blank?! First one I assume the user filled in everything. */
     SELECT rec.id, rec.recipe_name
     FROM recipes AS rec
         RIGHT JOIN meal_recipes AS meal_rec
@@ -153,11 +152,11 @@ BEGIN
 						ON rec.id = rec_ing2.recipe_id
 							AND ing2.id = rec_ing2.ingredient_id
 				WHERE
-					(ing2.ingredient_name = includeing1
-					OR ing2.ingredient_name = includeing2
-					OR ing2.ingredient_name = includeing3
-					OR ing2.ingredient_name = includeing4
-					OR ing2.ingredient_name = includeing5)
+					(ing2.id = includeing1
+					OR ing2.id = includeing2
+					OR ing2.id = includeing3
+					OR ing2.id = includeing4
+					OR ing2.id = includeing5)
 				)
 				=
 				(IF(ISNULL(includeing1), 5, 
@@ -183,11 +182,11 @@ BEGIN
 					ON rec.id = rec_ing.recipe_id
 						AND ing.id = rec_ing.ingredient_id
 			WHERE (
-				(ing.ingredient_name = discludeing1)
-				OR (ing.ingredient_name = discludeing2)
-				OR (ing.ingredient_name = discludeing3)
-				OR (ing.ingredient_name = discludeing4)
-				OR (ing.ingredient_name = discludeing5)
+				(ing.id = discludeing1)
+				OR (ing.id = discludeing2)
+				OR (ing.id = discludeing3)
+				OR (ing.id = discludeing4)
+				OR (ing.id = discludeing5)
                 )
 			)
 			= 0
