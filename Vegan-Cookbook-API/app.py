@@ -134,15 +134,40 @@ def addrecipe ():
     return viewrecipe(recipeId);
 
 
-@app.route('/recipe', methods = ['GET'])
+@app.route('/viewrecipesteps', methods = ['GET'])
 @cross_origin()
-def viewrecipe (recipeid):
+def viewrecipesteps ():
+    recipeid = request.args.get('recipeId')
     query = f"""
-        CALL veg.viewrecipe(
+        CALL veg.viewrecipesteps(
             {recipeid}
         );"""
     return {
-        "recipe":executeandclose(query)
+        "steps":executeandclose(query)
+    }
+
+@app.route('/viewrecipeingredients', methods = ['GET'])
+@cross_origin()
+def viewrecipeingredients ():
+    recipeid = request.args.get('recipeId')
+    query = f"""
+        CALL veg.viewrecipeingredients(
+            {recipeid}
+        );"""
+    return {
+        "ingredients":executeandclose(query)
+    }
+
+@app.route('/viewrecipemealtimes', methods = ['GET'])
+@cross_origin()
+def viewrecipemealtimes ():
+    recipeid = request.args.get('recipeId')
+    query = f"""
+        CALL veg.viewrecipemealtimes(
+            {recipeid}
+        );"""
+    return {
+        "mealtimes":executeandclose(query)
     }
 
 @app.route('/ingredients')
@@ -157,4 +182,5 @@ def getnewcursor ():
     db = mysql.connector.connect(host="localhost", user="root", database="veg", password="Camiscode6363!", pool_name="vegPool", pool_size=4)
     return db.cursor(), db
 
-app.run(port=5000)
+if __name__ == "__main__":
+    app.run(port=5000)

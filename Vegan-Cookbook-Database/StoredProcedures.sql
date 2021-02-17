@@ -51,26 +51,42 @@ BEGIN
     INSERT INTO ingredients_recipes (recipe_id, ingredient_id)
         VALUES (recipeident, ingreident);
 END$$
-CREATE PROCEDURE veg.viewrecipe (
+CREATE PROCEDURE veg.viewrecipesteps (
     recipeid BIGINT
 )
 BEGIN
-    SELECT rec.id, rec.recipe_name, nat.nationality, rec.health_rating, rec.prep_time_minutes, ing.ingredient_name, meal.meal_name, rec_step.step_number, rec_step.step_description
+    SELECT DISTINCT rec_step.step_number, rec_step.step_description
     FROM recipes AS rec
-        LEFT JOIN nationality AS nat
-            ON nat.id = rec.nationality_id
+        RIGHT JOIN recipe_steps AS rec_step
+            ON rec_step.recipe_id = recipeid
+	ORDER BY rec_step.step_number;
+END$$
+CREATE PROCEDURE veg.viewrecipeingredients (
+    recipeid BIGINT
+)
+BEGIN
+    SELECT ing.ingredient_name
+    FROM recipes AS rec
         RIGHT JOIN ingredients_recipes AS rec_ing
             ON recipeid = rec_ing.recipe_id
         LEFT JOIN ingredients AS ing
             ON ing.id = rec_ing.ingredient_id
+	GROUP BY ing.ingredient_name;
+END$$
+CREATE PROCEDURE veg.viewrecipemealtimes (
+    recipeid BIGINT
+)
+BEGIN
+    SELECT rec.id, rec.recipe_name, nat.nationality, rec.health_rating, rec.prep_time_minutes, meal.meal_name
+    FROM recipes AS rec
+        LEFT JOIN nationality AS nat
+            ON nat.id = rec.nationality_id
         LEFT JOIN meal_recipes AS meal_rec
             ON meal_rec.recipe_id = recipeid
         LEFT JOIN meal_types AS meal
             ON meal.id = meal_rec.meal_id
-        LEFT JOIN recipe_steps as rec_step
-            ON rec_step.recipe_id = recipeid;
+	WHERE rec.id = recipeid;
 END$$
-
 CREATE PROCEDURE veg.search (
     keywords1 varchar(255)
     ,keywords2 varchar (255)

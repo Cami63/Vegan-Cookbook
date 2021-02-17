@@ -13,10 +13,12 @@ class ApiConnector {
         })
             .then(resp => resp.json());
     }
+    /*
     static viewrecipe(recipeid) {
         return fetch('http://localhost:5000/recipe')
             .then(resp => resp.json());
     }
+    */
     static addrecipe(addedData) {
         return fetch('http://localhost:5000/recipe', {
             method:'post'
@@ -39,6 +41,18 @@ class ApiConnector {
     }*/
     static getMealTypes() {
         return fetch('http://localhost:5000/meal_types')
+            .then(resp => resp.json());
+    }
+    static viewRecipeSteps(recipeid) {
+        return fetch(`http://localhost:5000/viewrecipesteps?recipeId=${recipeid}`)
+            .then(resp => resp.json());
+    }
+    static viewRecipeIngredients(recipeid) {
+        return fetch(`http://localhost:5000/viewrecipeingredients?recipeId=${recipeid}`)
+            .then(resp => resp.json());
+    }
+    static viewRecipeMealTimes(recipeid) {
+        return fetch(`http://localhost:5000/viewrecipemealtimes?recipeId=${recipeid}`)
             .then(resp => resp.json());
     }
 }
