@@ -30,7 +30,7 @@ function SearchPage(props) {
         ApiConnector.getIngredients().then(results => setIngredients(results.ingredients));
     }, []);
     /*I am creating a function to collect all of the user's data, I will then pass the results of this function into SearchResults.js*/
-    const search = () => {
+    const onUserClickedSearch = () => {
         const searchIncludeIngredient1 = Number(includeIngredient1.current.value) || null;
         const searchIncludeIngredient2 = Number(includeIngredient2.current.value) || null;
         const searchIncludeIngredient3 = Number(includeIngredient3.current.value) || null;
@@ -204,6 +204,8 @@ function SearchPage(props) {
             </div>
             <div class="health-rating">
                 <ul id="health-rat">
+                    {//note to self the checked section may be unnecessary?
+                    }
                     <input checked={healthRating===1} onChange={(event) => setHealthRating(1)} type="radio" id="one" name="rating" value="1" />
                     <label for="one">1</label>
                     <br />
@@ -238,7 +240,7 @@ function SearchPage(props) {
                 <input ref={prepmax} type="number" name="minutes" id="maximum" step="1"></input>
             </div>
         </div>
-        <button onClick={search} class="search-btn">SEARCH</button>
+        <button onClick={onUserClickedSearch} class="search-btn">SEARCH</button>
         <div>
             <h3>
                 Results:

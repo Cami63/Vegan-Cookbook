@@ -19,6 +19,7 @@ export default function SearchResults(props) {
     };
 
     const viewRecipe = (recipeId) => {
+        //Waiting for all the promises to be fulfilled
         Promise.all([
             viewrecipesteps(recipeId),
             viewrecipeingredients(recipeId),
